@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layoutDirection="rtl"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:background="#FFFFFF">
+
+    <!-- نام کالا -->
+
+    <TextView
+        android:id="@+id/txtItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.4"
+        android:gravity="center"
+        android:text="نان تست"
+        android:textColor="#3E2A12"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:maxLines="2" />
+
+    <!-- تعداد -->
+
+    <TextView
+        android:id="@+id/txtItemQuantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.9"
+        android:gravity="center"
+        android:text="10"
+        android:textColor="#3E2A12"
+        android:textSize="15sp" />
+
+    <!-- قیمت واحد -->
+
+    <TextView
+        android:id="@+id/txtItemPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.6"
+        android:gravity="center"
+        android:text="800,000"
+        android:textColor="#3E2A12"
+        android:textSize="14sp" />
+
+    <!-- مبلغ کل -->
+
+    <TextView
+        android:id="@+id/txtItemTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.8"
+        android:gravity="center"
+        android:text="8,000,000"
+        android:textColor="#6B4308"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

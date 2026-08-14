@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/invoiceImageRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#FFFFFF"
+        android:layoutDirection="rtl">
+
+        <!-- لوگو -->
+
+        <ImageView
+            android:id="@+id/imgInvoiceLogo"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:contentDescription="لوگوی نان فانتزی هلیا"
+            android:src="@drawable/helia2" />
+
+        <!-- نام فروشگاه -->
+
+        <TextView
+            android:id="@+id/txtInvoiceShopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="نان فانتزی هلیا"
+            android:textColor="#6B4308"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/txtInvoiceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="فاکتور فروش"
+            android:textColor="#3E2A12"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- اطلاعات فاکتور -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:background="#FFF8EA">
+
+            <TextView
+                android:id="@+id/txtInvoiceNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="شماره فاکتور:\n80036"
+                android:textColor="#3E2A12"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtInvoiceDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="تاریخ:\n2026-08-11"
+                android:textColor="#3E2A12"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtInvoiceTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="ساعت:\n12:10"
+                android:textColor="#3E2A12"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- مشتری -->
+
+        <TextView
+            android:id="@+id/txtInvoiceCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:padding="14dp"
+            android:gravity="right|center_vertical"
+            android:text="مشتری: حسن رضایی"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#704500" />
+
+        <!-- عنوان جدول کالاها -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:padding="12dp"
+            android:background="#704500">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.4"
+                android:gravity="center"
+                android:text="نام کالا"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:text="تعداد"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.6"
+                android:gravity="center"
+                android:text="قیمت واحد"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.8"
+                android:gravity="center"
+                android:text="مبلغ کل"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- محل کالاها -->
+
+        <LinearLayout
+            android:id="@+id/invoiceItemsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="18dp">
+
+        </LinearLayout>
+
+        <!-- جمع کل -->
+
+        <TextView
+            android:id="@+id/txtInvoiceTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="18dp"
+            android:gravity="right|center_vertical"
+            android:text="جمع کل: 43,000,000 ریال"
+            android:textColor="#3E2A12"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:background="#FFF0C7" />
+
+        <!-- پیام پایانی -->
+
+        <TextView
+            android:id="@+id/txtInvoiceThankYou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="از خرید شما سپاسگزاریم"
+            android:textColor="#6B4308"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- پایین فاکتور -->
+
+        <TextView
+            android:id="@+id/txtInvoiceFooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="نان فانتزی هلیا&#10;کیفیت، طعم، سلامت"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="#4A2C08" />
+
+    </LinearLayout>
+
+</ScrollView>
