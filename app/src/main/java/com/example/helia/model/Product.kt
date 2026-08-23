@@ -2,7 +2,8 @@ package com.example.helia.model
 
 data class Product(
 
-    val productID: Int,
+//    val productID: Int,
+    val productID: String,
 
     val productName: String,
 

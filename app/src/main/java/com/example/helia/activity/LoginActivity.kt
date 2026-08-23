@@ -33,10 +33,9 @@ class LoginActivity : AppCompatActivity(){
 
             binding.edtUserName.setText(savedUserName)
 
-            binding.edtPassword.requestFocus()
-//            binding.edtPassword.setText(savedPassword)
+//            binding.edtPassword.requestFocus()
+            binding.edtPassword.setText(savedPassword)
 
-// فرض بر اینکه binding را در پروژه دارید
             binding.edtUserName.setTextColor(
                 ContextCompat.getColor(this, R.color.black)
             )
@@ -48,9 +47,14 @@ class LoginActivity : AppCompatActivity(){
         binding.btnLogin.setOnClickListener {
             lifecycleScope.launch {
                 try {
+
+//                    Toast.makeText(applicationContext, "MY Point1", Toast.LENGTH_LONG).show()
+
                     val request = LoginRequest(
-                        username = binding.edtUserName.text.toString().trim(),
-                        password = binding.edtPassword.text.toString()
+//                        username = binding.edtUserName.text.toString().trim(),
+//                        password = binding.edtPassword.text.toString()
+                        username = convertNumToEnglish(binding.edtUserName.text.toString().trim()),
+                        password = convertNumToEnglish(binding.edtPassword.text.toString())
                     )
                     val result =
                         RetrofitClient.api.login(request)
@@ -59,7 +63,6 @@ class LoginActivity : AppCompatActivity(){
 //                    if (true) {
 
                         result.data?.let { user ->
-
                             PreferencesManager.saveUser(
                                 this@LoginActivity,
                                 user.userID,
@@ -110,5 +113,19 @@ class LoginActivity : AppCompatActivity(){
             }
         }
     }
+
+    private fun convertNumToEnglish(input: String): String {
+        return input.replace('۰', '0')
+            .replace('۱', '1')
+            .replace('۲', '2')
+            .replace('۳', '3')
+            .replace('۴', '4')
+            .replace('۵', '5')
+            .replace('۶', '6')
+            .replace('۷', '7')
+            .replace('۸', '8')
+            .replace('۹', '9')
+    }
+
 
 }

@@ -1,5 +1,4 @@
 package com.example.helia.adapter
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,22 +11,25 @@ class InvoiceHistoryAdapter(
     private val onClick: (InvoiceHistory) -> Unit
 ) : RecyclerView.Adapter<InvoiceHistoryAdapter.ViewHolder>() {
 
-
     inner class ViewHolder(
         private val binding: ItemInvoiceHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(invoice: InvoiceHistory) {
 
             binding.txtInvoiceID.text =
                 "فاکتور: ${invoice.invoiceID}"
 
+//            binding.txtDateTime.text =
+//                "${invoice.invoiceDate} ${invoice.invoiceTime}"
             binding.txtDateTime.text =
-                "${invoice.invoiceDate} ${invoice.invoiceTime}"
+                "${invoice.invoiceDate}"
 
             binding.txtCount.text =
                 "تعداد کالا: ${invoice.itemCount}"
+
+            binding.txtReturnedCount.text =
+                "ب.گ. ${invoice.itemReturnedCount}"
 
             binding.txtAmount.text =
                 "${String.format("%,d", invoice.totalAmount)} ریال"
@@ -39,7 +41,6 @@ class InvoiceHistoryAdapter(
             }
         }
     }
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -56,7 +57,6 @@ class InvoiceHistoryAdapter(
         return ViewHolder(binding)
     }
 
-
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int
@@ -65,7 +65,6 @@ class InvoiceHistoryAdapter(
         holder.bind(invoices[position])
 
     }
-
 
     override fun getItemCount(): Int =
         invoices.size

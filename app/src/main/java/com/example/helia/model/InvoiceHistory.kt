@@ -6,10 +6,12 @@ data class InvoiceHistory(
 
     val invoiceDate: String,
 
-    val invoiceTime: String,
+//    val invoiceTime: String,
 
     val totalAmount: Long,
 
-    val itemCount: Int
+    val itemCount: Int,
+
+    val itemReturnedCount: Int
 
 )

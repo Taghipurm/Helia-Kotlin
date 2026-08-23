@@ -13,7 +13,6 @@
     android:background="#FFFFFF">
 
     <!-- نام کالا -->
-
     <TextView
         android:id="@+id/txtItemName"
         android:layout_width="0dp"
@@ -27,7 +26,6 @@
         android:maxLines="2" />
 
     <!-- تعداد -->
-
     <TextView
         android:id="@+id/txtItemQuantity"
         android:layout_width="0dp"
@@ -38,11 +36,18 @@
         android:textColor="#3E2A12"
         android:textSize="15sp" />
 
-    <!-- قیمت واحد -->
+    <!-- برگشتی -->
+    <TextView
+        android:id="@+id/txtItemReturnedQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:textSize="14sp" />
 
+    <!-- قیمت واحد -->
     <TextView
         android:id="@+id/txtItemPrice"
-        android:layout_width="0dp"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.6"
         android:gravity="center"
@@ -51,7 +56,6 @@
         android:textSize="14sp" />
 
     <!-- مبلغ کل -->
-
     <TextView
         android:id="@+id/txtItemTotal"
         android:layout_width="0dp"

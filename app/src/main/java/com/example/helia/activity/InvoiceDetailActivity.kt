@@ -101,6 +101,7 @@ class InvoiceDetailActivity : AppCompatActivity() {
             editLauncher.launch(intent)
 
         }
+
         loadInvoice()
 
     }
@@ -111,10 +112,13 @@ class InvoiceDetailActivity : AppCompatActivity() {
 
             try {
 
+                Toast.makeText(applicationContext, "MY Point1", Toast.LENGTH_LONG).show()
+
                 val result =
                     RetrofitClient.api.getInvoice(
                         invoiceID
                     )
+                Toast.makeText(applicationContext, "MY Point1.1", Toast.LENGTH_LONG).show()
 
                 if(result.success) {
 
@@ -133,8 +137,10 @@ class InvoiceDetailActivity : AppCompatActivity() {
                         binding.txtCustomer.text =
                             "مشتری: ${invoice.customerName}"
 
+//                        binding.txtDate.text =
+//                            "${invoice.invoiceDate}   ${invoice.invoiceTime}"
                         binding.txtDate.text =
-                            "${invoice.invoiceDate}   ${invoice.invoiceTime}"
+                            "${invoice.invoiceDate}"
 
                         //-----------------
                         // Details

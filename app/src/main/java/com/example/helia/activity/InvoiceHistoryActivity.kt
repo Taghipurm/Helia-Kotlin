@@ -52,8 +52,7 @@ class InvoiceHistoryActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        supportActionBar?.title =
-            "تاریخچه فاکتورها"
+        supportActionBar?.title = "تاریخچه فاکتورها"
 
         adapter =
             InvoiceHistoryAdapter(invoices) { invoice ->
@@ -90,13 +89,13 @@ class InvoiceHistoryActivity : AppCompatActivity() {
 
         val customerName = CurrentInvoice.customer?.customerName
 
+        val mobileNo = CurrentInvoice.customer?.mobile
+
         lifecycleScope.launch {
 
             try {
-
                 val result =
-                    RetrofitClient.api.getInvoices(customerID)
-
+                    RetrofitClient.api.GetCustomerInvoices(customerID)
                 Log.d(
                     "INVOICE_HISTORY",
                     result.toString()
@@ -106,6 +105,9 @@ class InvoiceHistoryActivity : AppCompatActivity() {
 
                     binding.txtCustomer.text =
                         "نام مشتری: ${customerName}"
+
+                    binding.txtMobile.text =
+                        "موبایل: ${mobileNo}"
 
                     invoices.clear()
 

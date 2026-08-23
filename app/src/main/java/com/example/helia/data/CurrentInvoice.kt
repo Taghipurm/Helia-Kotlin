@@ -10,7 +10,7 @@ object CurrentInvoice {
     // اقلام فاکتور
     val items = mutableListOf<InvoiceItem>()
 
-    fun addItem(product: Product, quantity: Int) {
+    fun addItem(product: Product, quantity: Int, returnedQuantity: Int = 0) {
         val item = items.find { it.productID == product.productID }
 
         if (item == null) {
@@ -19,16 +19,21 @@ object CurrentInvoice {
                     productID = product.productID,
                     productName = product.productName,
                     price = product.price,
-                    quantity = quantity
+                    quantity = quantity,
+                    returnedQuantity = returnedQuantity
                 )
             )
         } else {
             item.quantity += quantity
+            item.returnedQuantity += returnedQuantity
+
         }
     }
 
     fun total(): Long {
-        return items.sumOf { it.price * it.quantity }
+        return items.sumOf {
+            it.price * (it.quantity - it.returnedQuantity)
+        }
     }
 
     fun clear() {

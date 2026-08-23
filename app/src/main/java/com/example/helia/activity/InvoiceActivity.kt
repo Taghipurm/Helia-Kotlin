@@ -1,5 +1,6 @@
 package com.example.helia.activity
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -17,21 +18,42 @@ import com.example.helia.model.InvoiceItem
 import com.example.helia.network.RetrofitClient
 import kotlinx.coroutines.launch
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
+import com.example.helia.R
+import android.widget.LinearLayout
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import android.util.Log
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.content.ContentValues
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import android.os.Handler
+import android.os.Looper
 
 class InvoiceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInvoiceBinding
     private lateinit var adapter: InvoiceAdapter
+
+    private lateinit var invoiceImageView: View
     private var editMode = false
     private var editInvoiceID: Long = 0
+    //    private var invoiceNumber: Long = 0
+    private var invoiceNumber: String = "0"
+    private var invoiceDate: String = ""
+//    private var invoiceTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =
             ActivityInvoiceBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        fillInvoiceImageItems()
+        setContentView(binding.root)
 
         editMode =
             intent.getStringExtra("MODE") == "EDIT"
@@ -42,6 +64,24 @@ class InvoiceActivity : AppCompatActivity() {
                 0
             )
 
+        if (!editMode) {
+            setCurrentInvoiceDateTime()
+        }
+
+        invoiceImageView = layoutInflater.inflate(
+            R.layout.invoice_image,
+            null
+        )
+
+//        editMode =
+//            intent.getStringExtra("MODE") == "EDIT"
+//
+//        editInvoiceID =
+//            intent.getLongExtra(
+//                "InvoiceID",
+//                0
+//            )
+
         if (editMode) {
             title = "ویرایش فاکتور"
             lifecycleScope.launch {
@@ -49,7 +89,7 @@ class InvoiceActivity : AppCompatActivity() {
                 loadInvoiceForEdit()
             }
         } else {
-            title = "ثبت فاکتور"
+            title = "ثبت فاکتور جدید2"
         }
 
         binding.txtCustomer.text =
@@ -117,7 +157,8 @@ class InvoiceActivity : AppCompatActivity() {
             val request = InvoiceRequest(
 
                 customerID =
-                    CurrentInvoice.customer?.customerID ?: 0,
+//                    CurrentInvoice.customer?.customerID ?: 0,
+                CurrentInvoice.customer?.customerID ?: "0",
 
                 userID =
                     PreferencesManager.getUserID(this),
@@ -127,17 +168,17 @@ class InvoiceActivity : AppCompatActivity() {
 
                 items =
                     CurrentInvoice.items.map {
-
+                        Log.d(
+                            "INVOICE_RETURN",
+                            "product=${it.productName}, quantity=${it.quantity}, returned=${it.returnedQuantity}"
+                        )
                         InvoiceDetailRequest(
-
                             productID = it.productID,
-
+                            productName = it.productName,
                             quantity = it.quantity,
-
+                            returnedQuantity = it.returnedQuantity,
                             price = it.price,
-
-                            totalAmount = it.price * it.quantity
-
+                            totalAmount = it.price * (it.quantity - it.returnedQuantity)
                         )
                     }
             )
@@ -146,6 +187,56 @@ class InvoiceActivity : AppCompatActivity() {
                 RetrofitClient.api.saveInvoice(request)
 
             if (result.success) {
+
+//                invoiceNumber = result.data ?: 0
+                invoiceNumber = result.data ?: "0"
+
+                fillInvoiceImageInfo()
+                fillInvoiceImageItems()
+
+                val invoiceBitmap = createInvoiceBitmap()
+
+                val invoiceUri =
+                    saveInvoiceBitmap(invoiceBitmap)
+
+                if (invoiceUri != null) {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+
+                            setDataAndType(
+                                invoiceUri,
+                                "image/*"
+                            )
+
+                            addFlags(
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            )
+                        }
+
+                        try {
+
+                            startActivity(intent)
+
+                        } catch (e: ActivityNotFoundException) {
+
+                            Toast.makeText(
+                                this,
+                                "برنامه‌ای برای نمایش تصویر پیدا نشد.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    }, 1000)
+
+                } else {
+
+                    Log.e(
+                        "INVOICE_IMAGE",
+                        "invoiceUri IS NULL"
+                    )
+                }
 
                 Toast.makeText(
                     this,
@@ -205,8 +296,10 @@ class InvoiceActivity : AppCompatActivity() {
                         InvoiceDetailRequest(
                             productID =
                                 it.productID,
+                            productName = it.productName,
                             quantity =
                                 it.quantity,
+                            returnedQuantity = it.returnedQuantity,
                             price =
                                 it.price,
                             totalAmount =
@@ -253,6 +346,10 @@ class InvoiceActivity : AppCompatActivity() {
 
                 val invoice =
                     result.data ?: return
+
+                invoiceNumber = invoice.invoiceID
+                invoiceDate = invoice.invoiceDate
+//                invoiceTime = invoice.invoiceTime
 
                 //---------------------------------
                 // پاک کردن فاکتور قبلی
@@ -325,13 +422,18 @@ class InvoiceActivity : AppCompatActivity() {
 
     private fun fillInvoiceImageItems() {
 
-        binding.invoiceItemsContainer.removeAllViews()
+        val container =
+            invoiceImageView.findViewById<LinearLayout>(
+                R.id.invoiceItemsContainer
+            )
+
+        container.removeAllViews()
 
         CurrentInvoice.items.forEach { item ->
 
-            val row = LayoutInflater.from(this).inflate(
+            val row = layoutInflater.inflate(
                 R.layout.invoice_item_image,
-                binding.invoiceItemsContainer,
+                container,
                 false
             )
 
@@ -340,6 +442,9 @@ class InvoiceActivity : AppCompatActivity() {
 
             val txtQuantity =
                 row.findViewById<TextView>(R.id.txtItemQuantity)
+
+            val txtReturnedQuantity =
+                row.findViewById<TextView>(R.id.txtItemReturnedQuantity)
 
             val txtPrice =
                 row.findViewById<TextView>(R.id.txtItemPrice)
@@ -352,24 +457,255 @@ class InvoiceActivity : AppCompatActivity() {
             txtQuantity.text =
                 item.quantity.toString()
 
+            txtReturnedQuantity.text =
+//                "برگشت: ${item.returnedQuantity}"
+                item.returnedQuantity.toString()
+
             txtPrice.text =
                 formatPrice(item.price)
 
-            txtTotal.text =
-                formatPrice(item.price * item.quantity)
+            val netQuantity =
+                item.quantity - item.returnedQuantity
 
-            binding.invoiceItemsContainer.addView(row)
+            txtTotal.text =
+                formatPrice(item.price * netQuantity)
+
+            container.addView(row)
         }
     }
 
     private fun formatPrice(value: Long): String {
-
-        return String.format(
-            "%,d",
-            value
-        )
+        return String.format("%,d", value)
     }
 
+    private fun fillInvoiceImageInfo() {
+
+        val customer =
+            invoiceImageView.findViewById<TextView>(
+                R.id.txtInvoiceCustomer
+            )
+
+        val total =
+            invoiceImageView.findViewById<TextView>(
+                R.id.txtInvoiceTotal
+            )
+
+        val number =
+            invoiceImageView.findViewById<TextView>(
+                R.id.txtInvoiceNumber
+            )
+
+        val date =
+            invoiceImageView.findViewById<TextView>(
+                R.id.txtInvoiceDate
+            )
+
+//        val time =
+//            invoiceImageView.findViewById<TextView>(
+//                R.id.txtInvoiceTime
+//            )
+
+        number.text =
+//            "شماره فاکتور:\n$invoiceNumber"
+            "شماره: $invoiceNumber"
+
+        date.text =
+            "تاریخ: $invoiceDate"
+
+//        time.text =
+//            "ساعت: $invoiceTime"
+
+        customer.text =
+            "نام مشتری: ${CurrentInvoice.customer?.customerName ?: ""}"
+
+        total.text =
+            "جمع کل: ${formatPrice(CurrentInvoice.total())} ریال"
+
+
+    }
+
+    private fun setCurrentInvoiceDateTime() {
+
+        val now = Date()
+
+        val dateFormat =
+            SimpleDateFormat(
+                "yyyy/MM/dd",
+                Locale.getDefault()
+            )
+
+        val timeFormat =
+            SimpleDateFormat(
+                "HH:mm",
+                Locale.getDefault()
+            )
+
+//        invoiceDate = dateFormat.format(now)
+//        invoiceTime = timeFormat.format(now)
+
+        // فرض کنیم این داخل onCreate اکتیویتی شماست
+        lifecycleScope.launch {
+            try {
+                // حالا می‌توانید تابع suspend را فراخوانی کنید
+                val response = RetrofitClient.api.getServerShamsiDate()
+
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    if (data != null && data.success) {
+                        // نمایش تاریخ در UI
+                        invoiceDate = data.date
+                    }
+                }
+            } catch (e: Exception) {
+                // مدیریت خطا (مثلاً قطع بودن اینترنت)
+                e.printStackTrace()
+            }
+        }
+
+    }
+
+    private fun createInvoiceBitmap(): Bitmap {
+
+        try {
+
+            val view = invoiceImageView
+
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(
+                    resources.displayMetrics.widthPixels,
+                    View.MeasureSpec.EXACTLY
+                ),
+                View.MeasureSpec.makeMeasureSpec(
+                    0,
+                    View.MeasureSpec.UNSPECIFIED
+                )
+            )
+
+            view.layout(
+                0,
+                0,
+                view.measuredWidth,
+                view.measuredHeight
+            )
+
+            val bitmap = Bitmap.createBitmap(
+                view.measuredWidth,
+                view.measuredHeight,
+                Bitmap.Config.ARGB_8888
+            )
+
+            val canvas = Canvas(bitmap)
+
+            canvas.drawColor(Color.WHITE)
+
+            view.draw(canvas)
+
+            return bitmap
+
+        } catch (e: Exception) {
+
+            Log.e(
+                "INVOICE_IMAGE",
+                "Bitmap error: ${e.message}",
+                e
+            )
+
+            throw e
+        }
+
+    }
+
+    private fun saveInvoiceBitmap(
+        bitmap: Bitmap
+    ): Uri? {
+
+        val fileName =
+            "Invoice_$invoiceNumber.png"
+
+        val values =
+            ContentValues().apply {
+
+                put(
+                    MediaStore.Images.Media.DISPLAY_NAME,
+                    fileName
+                )
+
+                put(
+                    MediaStore.Images.Media.MIME_TYPE,
+                    "image/png"
+                )
+
+                put(
+                    MediaStore.Images.Media.RELATIVE_PATH,
+                    Environment.DIRECTORY_PICTURES +
+                            "/HeliaInvoices"
+                )
+
+                put(
+                    MediaStore.Images.Media.IS_PENDING,
+                    1
+                )
+            }
+
+        val resolver = contentResolver
+
+        val uri =
+            resolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values
+            ) ?: return null
+
+        try {
+
+            resolver.openOutputStream(uri).use { outputStream ->
+
+                if (outputStream == null) {
+                    return null
+                }
+
+                val success =
+                    bitmap.compress(
+                        Bitmap.CompressFormat.PNG,
+                        100,
+                        outputStream
+                    )
+
+                if (!success) {
+                    throw IllegalStateException(
+                        "Bitmap compression failed"
+                    )
+                }
+            }
+
+            val completedValues =
+                ContentValues().apply {
+
+                    put(
+                        MediaStore.Images.Media.IS_PENDING,
+                        0
+                    )
+                }
+
+            resolver.update(
+                uri,
+                completedValues,
+                null,
+                null
+            )
+
+            return uri
+
+        } catch (e: Exception) {
+
+            resolver.delete(
+                uri,
+                null,
+                null
+            )
+
+            throw e
+        }
+    }
 
 
 }

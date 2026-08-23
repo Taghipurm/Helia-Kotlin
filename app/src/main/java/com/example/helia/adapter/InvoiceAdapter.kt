@@ -37,8 +37,13 @@ class InvoiceAdapter(
             item.productName
         holder.binding.txtQty.text =
             item.quantity.toString()
+        holder.binding.txtItemReturned.text=
+//            item.returnedQuantity.toString()
+            "ب.گ. ${item.returnedQuantity}"
         holder.binding.txtPrice.text =
-            (item.price * item.quantity).toString()
+//            (item.price * item.quantity).toString()
+            (item.price * (item.quantity-item.returnedQuantity)).toString()
+
 /*        // افزایش تعداد
         holder.binding.btnPlus.setOnClickListener {
             item.quantity++

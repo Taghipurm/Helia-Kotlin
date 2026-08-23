@@ -3,6 +3,7 @@ package com.example.helia.activity
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,34 +40,69 @@ class ProductActivity : AppCompatActivity() {
         // 3- اتصال Adapter به RecyclerView
         binding.rvProducts.adapter =
             adapter
+
         // 4- دریافت کالاها از API
         loadProducts()
     }
 
     private fun askQuantity(product: Product) {
 
-        val edt = EditText(this)
+        val edtQuantity = EditText(this)
 
-        edt.inputType =
+        edtQuantity.inputType =
             InputType.TYPE_CLASS_NUMBER
+
+        edtQuantity.hint = "تعداد فروش"
+
+
+        val edtReturned = EditText(this)
+
+        edtReturned.inputType =
+            InputType.TYPE_CLASS_NUMBER
+
+        edtReturned.hint = "تعداد برگشتی"
+        val layout = LinearLayout(this)
+
+        layout.orientation =
+            LinearLayout.VERTICAL
+
+        layout.addView(edtQuantity)
+
+        layout.addView(edtReturned)
 
         AlertDialog.Builder(this)
 
             .setTitle(product.productName)
 
-            .setMessage("تعداد")
-
-            .setView(edt)
+            .setView(layout)
 
             .setPositiveButton("تأیید") { _, _ ->
 
                 val quantity =
-                    edt.text.toString()
+                    edtQuantity.text
+                        .toString()
                         .toIntOrNull() ?: 1
+
+                val returnedQuantity =
+                    edtReturned.text
+                        .toString()
+                        .toIntOrNull() ?: 0
+
+                if (returnedQuantity > quantity) {
+
+                    Toast.makeText(
+                        this,
+                        "تعداد برگشتی نمی‌تواند بیشتر از تعداد فروش باشد.",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    return@setPositiveButton
+                }
 
                 CurrentInvoice.addItem(
                     product,
-                    quantity
+                    quantity,
+                    returnedQuantity
                 )
 
                 finish()
@@ -85,7 +121,9 @@ class ProductActivity : AppCompatActivity() {
 
             try {
 
-                val result = RetrofitClient.api.getProducts()
+//                val result = RetrofitClient.api.getProducts()
+                val selectedCustomerId = CurrentInvoice.customer!!.customerID
+                val result = RetrofitClient.api.getProducts(selectedCustomerId)
 
                 if (result.success) {
 

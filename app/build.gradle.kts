@@ -32,7 +32,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    buildToolsVersion = "37.0.0"
+    buildToolsVersion = "36.1.0"
 }
 
 dependencies {
@@ -47,5 +47,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }

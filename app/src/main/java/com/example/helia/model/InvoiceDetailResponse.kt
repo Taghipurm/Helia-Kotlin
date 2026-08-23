@@ -4,9 +4,11 @@ import android.R
 
 data class InvoiceDetailResponse(
 
-    val invoiceID: Long,
+//    val invoiceID: Long,
+    val invoiceID: String,
 
-    val customerID: Int,
+//    val customerID: Int,
+    val customerID: String,
 
     val customerName: String,
 
@@ -14,7 +16,7 @@ data class InvoiceDetailResponse(
 
     val invoiceDate: String,
 
-    val invoiceTime: String,
+//    val invoiceTime: String,
 
     val totalAmount: Long,
 

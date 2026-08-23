@@ -31,39 +31,25 @@ class CustomerActivity : AppCompatActivity() {
 
         adapter =
             CustomerAdapter(
-
                 customers,
-
                 onCustomerClick = { customer ->
-
                     CurrentInvoice.customer = customer
-
                     startActivity(
-
                         Intent(
                             this,
                             InvoiceActivity::class.java
                         )
-
                     )
-
                 },
-
                 onHistoryClick = { customer ->
-
                     CurrentInvoice.customer = customer
-
                     startActivity(
-
                         Intent(
                             this@CustomerActivity,
                             InvoiceHistoryActivity::class.java
                         )
-
                     )
-
                 }
-
             )
 
         binding.rvCustomers.adapter =
@@ -72,32 +58,21 @@ class CustomerActivity : AppCompatActivity() {
     }
 
     private fun loadCustomers() {
-
         lifecycleScope.launch {
-
             try {
-
                 val result = RetrofitClient.api.getCustomers()
-
                 if (result.success) {
-
                     customers.clear()
-
                     customers.addAll(result.data ?: emptyList())
-
                     adapter.notifyDataSetChanged()
-
                 } else {
-
                     Toast.makeText(
                         this@CustomerActivity,
                         result.message,
                         Toast.LENGTH_LONG
                     ).show()
-
                 }
             } catch (e: Exception) {
-
                 Toast.makeText(
                     this@CustomerActivity,
                     e.message,
