@@ -15,7 +15,8 @@ import com.example.helia.model.InvoiceHistory
 import com.example.helia.network.RetrofitClient
 import kotlinx.coroutines.launch
 
-class InvoiceHistoryActivity : AppCompatActivity() {
+//class InvoiceHistoryActivity : AppCompatActivity() {
+class InvoiceHistoryActivity : BaseActivity() {
 
     private lateinit var binding:
             ActivityInvoiceHistoryBinding

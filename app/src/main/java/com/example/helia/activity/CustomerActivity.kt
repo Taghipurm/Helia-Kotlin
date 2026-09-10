@@ -9,48 +9,60 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.helia.adapter.CustomerAdapter
 import com.example.helia.databinding.ActivityCustomerBinding
 import com.example.helia.data.CurrentInvoice
+import com.example.helia.data.UserGuidanceManager
 import com.example.helia.model.Customer
 import com.example.helia.network.RetrofitClient
 import kotlinx.coroutines.launch
 
-class CustomerActivity : AppCompatActivity() {
+//class CustomerActivity : AppCompatActivity() {
+class CustomerActivity : BaseActivity() {
     private lateinit var binding: ActivityCustomerBinding
-    private val customers =
-        mutableListOf<Customer>()
-    private lateinit var adapter:
-            CustomerAdapter
+    private val customers = mutableListOf<Customer>()
+    private lateinit var adapter: CustomerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding =
-            ActivityCustomerBinding.inflate(layoutInflater)
+        binding = ActivityCustomerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.rvCustomers.layoutManager =
-            LinearLayoutManager(this)
+        binding.rvCustomers.layoutManager = LinearLayoutManager(this)
 
-        adapter =
-            CustomerAdapter(
-                customers,
-                onCustomerClick = { customer ->
-                    CurrentInvoice.customer = customer
-                    startActivity(
-                        Intent(
-                            this,
-                            InvoiceActivity::class.java
-                        )
-                    )
-                },
-                onHistoryClick = { customer ->
-                    CurrentInvoice.customer = customer
-                    startActivity(
-                        Intent(
-                            this@CustomerActivity,
-                            InvoiceHistoryActivity::class.java
-                        )
-                    )
+        adapter = CustomerAdapter(
+            customers = customers,
+//                onCustomerClick = { customer ->
+            onPlusClick = { customer ->
+                if (!UserGuidanceManager.isCustomerHintShown) {
+                    Toast.makeText(
+                        this,
+                        "برای ایجاد فاکتور میتوانید بر روی نام مشتری نیز کلیک کنید",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    UserGuidanceManager.isCustomerHintShown = true
                 }
-            )
+                CurrentInvoice.customer = customer
+                startActivity(Intent(this, InvoiceActivity::class.java))
+            },
+            onRowClick = { customer ->
+                CurrentInvoice.customer = customer
+                startActivity(Intent(this, InvoiceActivity::class.java))
+            },
+            onHistoryClick = { customer ->
+                CurrentInvoice.customer = customer
+                startActivity(Intent(this@CustomerActivity, InvoiceHistoryActivity::class.java))
+            },
+            onLongClickNewInvoice =
+                { customer ->
+                    // نمایش دیالوگ راهنما
+                    androidx.appcompat.app.AlertDialog.Builder(this) // اگر در Fragment هستید بنویسید: requireContext()
+                        .setTitle("راهنما")
+                        .setMessage("برای ایجاد فاکتور جدید می‌توانید بر روی آیکون + و یا حتی بر روی سطر نام مشتری کلیک کنید.")
+                        .setPositiveButton("متوجه شدم") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+
+        )
 
         binding.rvCustomers.adapter =
             adapter

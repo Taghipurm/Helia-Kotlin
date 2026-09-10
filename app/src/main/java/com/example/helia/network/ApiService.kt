@@ -64,31 +64,36 @@ interface ApiService {
     @GET("api/Invoices/{invoiceID}")
     suspend fun getInvoice(
         @Path("invoiceID")
-        invoiceID: Long
+//        invoiceID: Long
+        invoiceID: String
     ): ApiResponse<InvoiceDetailResponse>
 
     @DELETE("api/Invoices/{invoiceID}")
     suspend fun deleteInvoice(
-        @Path("invoiceID") invoiceID: Long
+//        @Path("invoiceID") invoiceID: Long
+        @Path("invoiceID") invoiceID: String
     ): ApiResponse<Boolean>
 
     @PUT("api/Invoices/{invoiceID}")
     suspend fun updateInvoice(
         @Path("invoiceID")
-        invoiceID: Long,
+//        invoiceID: Long,
+        invoiceID: String,
         @Body
         request: InvoiceRequest
     ): ApiResponse<String>
 
     @POST("api/invoices/{invoiceID}/items")
     suspend fun addItem(
-        @Path("invoiceID") invoiceID: Int,
+//        @Path("invoiceID") invoiceID: Int,
+        @Path("invoiceID") invoiceID: String,
         @Body request: InvoiceDetailRequest
     ): Response<ApiResponse<Boolean>>
 
     @DELETE("api/invoices/{invoiceID}/items/{detailID}")
     suspend fun deleteItem(
-        @Path("invoiceID") invoiceID: Int,
+//        @Path("invoiceID") invoiceID: Int,
+        @Path("invoiceID") invoiceID: String,
         @Path("detailID") detailID: Int
     ): Response<ApiResponse<Boolean>>
 

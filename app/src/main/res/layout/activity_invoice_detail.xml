@@ -42,7 +42,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="80dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="80dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="8dp"
             app:layout_constraintStart_toStartOf="@+id/ivBackground"
@@ -112,18 +112,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="6dp"
+                        android:text="جمع کل"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-<!--
-                <com.google.android.material.button.MaterialButton
+<!--                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDelete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="حذف فاکتور" />
 -->
+<!--
+
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -134,7 +136,7 @@
                     android:paddingStart="4dp"
                     android:paddingEnd="4dp">
 
-                    <!-- حذف فاکتور -->
+                    &lt;!&ndash; حذف فاکتور &ndash;&gt;
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnDelete"
                         android:layout_width="0dp"
@@ -152,7 +154,7 @@
                         app:iconPadding="4dp"
                         app:iconTint="@color/white" />
 
-                    <!-- تصویر فاکتور -->
+                    &lt;!&ndash; تصویر فاکتور &ndash;&gt;
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnInvoiceImage"
                         android:layout_width="0dp"
@@ -170,7 +172,7 @@
                         app:iconPadding="4dp"
                         app:iconTint="@color/white" />
 
-                    <!-- ویرایش فاکتور -->
+                    &lt;!&ndash; ویرایش فاکتور &ndash;&gt;
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnEdit"
                         android:layout_width="0dp"
@@ -187,6 +189,63 @@
                         app:iconGravity="textStart"
                         app:iconPadding="4dp"
                         app:iconTint="@color/white" />
+
+                </LinearLayout>
+-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <!-- دکمه ویرایش (سبز) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnEdit"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1.1"
+                        android:layout_margin="4dp"
+                        android:text="ویرایش"
+                        android:textColor="#388E3C"
+                        app:strokeColor="#388E3C"
+                        app:strokeWidth="2dp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_edit_modern"
+                        app:iconTint="#388E3C" />
+
+                    <!-- دکمه تصویر (آبی) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnInvoiceImage"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:text="تصویر"
+                        android:textColor="#1976D2"
+                        app:strokeColor="#1976D2"
+                        app:strokeWidth="2dp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_invoice_image_modern"
+                        app:iconTint="#1976D2" />
+
+                    <!-- دکمه حذف (قرمز) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDelete"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:text="حذف"
+                        android:textColor="#D32F2F"
+                        app:strokeColor="#D32F2F"
+                        app:strokeWidth="2dp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_delete_modern"
+                        app:iconTint="#D32F2F" />
 
                 </LinearLayout>
 

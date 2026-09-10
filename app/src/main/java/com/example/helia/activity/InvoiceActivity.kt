@@ -35,14 +35,19 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.os.Handler
 import android.os.Looper
+import com.example.helia.helpers.toPersianDigits
+import com.example.helia.helpers.toPersianFormattedNumber
 
-class InvoiceActivity : AppCompatActivity() {
+//class InvoiceActivity : AppCompatActivity() {
+class InvoiceActivity : BaseActivity() {
     private lateinit var binding: ActivityInvoiceBinding
     private lateinit var adapter: InvoiceAdapter
 
     private lateinit var invoiceImageView: View
     private var editMode = false
-    private var editInvoiceID: Long = 0
+
+//    private var editInvoiceID: Long = 0
+    private var editInvoiceID: String = "0"
     //    private var invoiceNumber: Long = 0
     private var invoiceNumber: String = "0"
     private var invoiceDate: String = ""
@@ -50,6 +55,7 @@ class InvoiceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding =
             ActivityInvoiceBinding.inflate(layoutInflater)
 
@@ -58,11 +64,8 @@ class InvoiceActivity : AppCompatActivity() {
         editMode =
             intent.getStringExtra("MODE") == "EDIT"
 
-        editInvoiceID =
-            intent.getLongExtra(
-                "InvoiceID",
-                0
-            )
+//        editInvoiceID = intent.getLongExtra("InvoiceID",""            )
+        editInvoiceID = intent.getStringExtra("InvoiceID") ?: ""
 
         if (!editMode) {
             setCurrentInvoiceDateTime()
@@ -83,10 +86,14 @@ class InvoiceActivity : AppCompatActivity() {
 //            )
 
         if (editMode) {
+
+            binding.txtInvoiceTitle.text = "ویرایش فاکتور"
+
             title = "ویرایش فاکتور"
             lifecycleScope.launch {
 
                 loadInvoiceForEdit()
+
             }
         } else {
             title = "ثبت فاکتور جدید2"
@@ -95,9 +102,10 @@ class InvoiceActivity : AppCompatActivity() {
         binding.txtCustomer.text =
             "مشتری: ${CurrentInvoice.customer?.customerName ?: ""}"
         binding.txtTotal.text =
-            "جمع کل: ${CurrentInvoice.total()}"
+            "جمع کل1: ${CurrentInvoice.total()}"
         binding.rvItems.layoutManager =
             LinearLayoutManager(this@InvoiceActivity)
+
         adapter =
             InvoiceAdapter(
                 CurrentInvoice.items
@@ -116,32 +124,44 @@ class InvoiceActivity : AppCompatActivity() {
                 )
             )
         }
+
         updateTotal()
         updateSaveButton()
         binding.btnSaveInvoice.setOnClickListener {
             lifecycleScope.launch {
 
                 if (editMode) {
-                    updateInvoice()
+
+                    try {
+
+                        updateInvoice()
+
+                    } catch (e: Exception) {
+
+                        Log.e("InvoiceUpdate","updateInvoice error",e)
+                    }
+
                 } else {
+
                     saveInvoice()
                 }
 
             }
 
         }
+
     }
 
     private fun updateTotal() {
-        binding.txtTotal.text =
-            "جمع کل: ${CurrentInvoice.total()}"
+//        binding.txtTotal.text = "جمع کل: ${String.format("%,d", CurrentInvoice.total())}"
+        binding.txtTotal.text = "جمع کل2: ${CurrentInvoice.total().toPersianFormattedNumber()}"
     }
 
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
         binding.txtTotal.text =
-            "جمع کل: ${CurrentInvoice.total()}"
+            "جمع کل: ${CurrentInvoice.total().toPersianFormattedNumber()}"
         updateSaveButton()
     }
 
@@ -283,36 +303,38 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     private suspend fun updateInvoice() {
-        val request =
-            InvoiceRequest(
-                customerID =
-                    CurrentInvoice.customer!!.customerID,
-                userID =
-                    PreferencesManager.getUserID(this),
-                totalAmount =
-                    CurrentInvoice.total(),
-                items =
-                    CurrentInvoice.items.map {
-                        InvoiceDetailRequest(
-                            productID =
-                                it.productID,
-                            productName = it.productName,
-                            quantity =
-                                it.quantity,
-                            returnedQuantity = it.returnedQuantity,
-                            price =
-                                it.price,
-                            totalAmount =
-                                it.price *
-                                        it.quantity
-                        )
-                    }
-            )
-        val result =
-            RetrofitClient.api.updateInvoice(
-                editInvoiceID,
-                request
-            )
+
+        val request = InvoiceRequest(
+
+            customerID =
+//                    CurrentInvoice.customer?.customerID ?: 0,
+                CurrentInvoice.customer?.customerID ?: "0",
+
+            userID =
+                PreferencesManager.getUserID(this),
+
+            totalAmount =
+                CurrentInvoice.total(),
+
+            items =
+                CurrentInvoice.items.map {
+                    Log.d(
+                        "INVOICE_RETURN",
+                        "product=${it.productName}, quantity=${it.quantity}, returned=${it.returnedQuantity}"
+                    )
+                    InvoiceDetailRequest(
+                        productID = it.productID,
+                        productName = it.productName,
+                        quantity = it.quantity,
+                        returnedQuantity = it.returnedQuantity,
+                        price = it.price,
+                        totalAmount = it.price * (it.quantity - it.returnedQuantity)
+                    )
+                }
+        )
+
+        val result = RetrofitClient.api.updateInvoice(editInvoiceID, request)
+
         if (result.success) {
             Toast.makeText(
                 this@InvoiceActivity,
@@ -361,6 +383,8 @@ class InvoiceActivity : AppCompatActivity() {
                 // مشتری
                 //---------------------------------
 
+                Log.d("InvoiceDebug", "customerID = [$invoice.customerID]")
+
                 CurrentInvoice.customer =
                     Customer(
                         customerID = invoice.customerID,
@@ -374,23 +398,14 @@ class InvoiceActivity : AppCompatActivity() {
                 //---------------------------------
 
                 invoice.items.forEach {
-
                     CurrentInvoice.items.add(
-
                         InvoiceItem(
-
                             productID = it.productID,
-
                             productName = it.productName,
-
                             quantity = it.quantity,
-
                             price = it.price
-
                         )
-
                     )
-
                 }
 
                 //---------------------------------
@@ -454,28 +469,21 @@ class InvoiceActivity : AppCompatActivity() {
 
             txtName.text = item.productName
 
-            txtQuantity.text =
-                item.quantity.toString()
+            txtQuantity.text = item.quantity.toPersianFormattedNumber()
 
             txtReturnedQuantity.text =
 //                "برگشت: ${item.returnedQuantity}"
-                item.returnedQuantity.toString()
+//                item.returnedQuantity.toString()
+                item.returnedQuantity.toPersianFormattedNumber()
 
-            txtPrice.text =
-                formatPrice(item.price)
+            txtPrice.text = (item.price).toPersianFormattedNumber()
 
-            val netQuantity =
-                item.quantity - item.returnedQuantity
+            val netQuantity = item.quantity - item.returnedQuantity
 
-            txtTotal.text =
-                formatPrice(item.price * netQuantity)
+            txtTotal.text = (item.price * netQuantity).toPersianFormattedNumber()
 
             container.addView(row)
         }
-    }
-
-    private fun formatPrice(value: Long): String {
-        return String.format("%,d", value)
     }
 
     private fun fillInvoiceImageInfo() {
@@ -505,12 +513,16 @@ class InvoiceActivity : AppCompatActivity() {
 //                R.id.txtInvoiceTime
 //            )
 
-        number.text =
-//            "شماره فاکتور:\n$invoiceNumber"
-            "شماره: $invoiceNumber"
+//        number.text =
+////            "شماره فاکتور:\n$invoiceNumber"
+//            "شماره3: $invoiceNumber"
+        number.text = "شماره: ${invoiceNumber.toPersianDigits()}"
 
-        date.text =
-            "تاریخ: $invoiceDate"
+
+//        date.text =
+//            "تاریخ: $invoiceDate"
+        date.text = "تاریخ: ${invoiceDate.toPersianDigits()}"
+
 
 //        time.text =
 //            "ساعت: $invoiceTime"
@@ -519,8 +531,7 @@ class InvoiceActivity : AppCompatActivity() {
             "نام مشتری: ${CurrentInvoice.customer?.customerName ?: ""}"
 
         total.text =
-            "جمع کل: ${formatPrice(CurrentInvoice.total())} ریال"
-
+            "جمع کل: ${CurrentInvoice.total().toPersianFormattedNumber()} ریال"
 
     }
 

@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:text="نام کالا"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 <!--
     <Button
         android:id="@+id/btnMinus"
@@ -29,7 +30,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="تعداد"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtItemReturned"
@@ -37,7 +39,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="برگشت0"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textStyle="bold" />
 <!--
     <Button
         android:id="@+id/btnPlus"
@@ -51,7 +54,8 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="مبلغ"/>
+        android:text="مبلغ"
+        android:textStyle="bold" />
 
 <!--
     <Button

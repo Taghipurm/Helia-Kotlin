@@ -36,19 +36,12 @@ class LoginActivity : AppCompatActivity(){
 //            binding.edtPassword.requestFocus()
             binding.edtPassword.setText(savedPassword)
 
-            binding.edtUserName.setTextColor(
-                ContextCompat.getColor(this, R.color.black)
-            )
-            binding.edtPassword.setTextColor(
-                ContextCompat.getColor(this, R.color.black)
-            )
-
         }
         binding.btnLogin.setOnClickListener {
             lifecycleScope.launch {
                 try {
 
-//                    Toast.makeText(applicationContext, "MY Point1", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext, "MY Point 1", Toast.LENGTH_LONG).show()
 
                     val request = LoginRequest(
 //                        username = binding.edtUserName.text.toString().trim(),

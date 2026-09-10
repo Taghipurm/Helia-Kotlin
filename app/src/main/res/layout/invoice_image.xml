@@ -53,7 +53,7 @@
                     android:id="@+id/txtInvoiceNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="شماره: 80036"
+                    android:text="شماره: ۱۴۰۵۱۱"
                     android:textColor="#3E2A12"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="تاریخ: 2026-08-11"
+                    android:text="تاریخ: ۱۴۰۵/۰۶/۱۵"
                     android:textColor="#3E2A12"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -200,7 +200,7 @@
             android:background="#FFF0C7"
             android:gravity="right|center_vertical"
             android:padding="18dp"
-            android:text="جمع کل: 43,000,000 ریال"
+            android:text="جمع کل: ۴۳/۰۰۰/۰۰۰ ریال"
             android:textColor="#3E2A12"
             android:textSize="20sp"
             android:textStyle="bold" />

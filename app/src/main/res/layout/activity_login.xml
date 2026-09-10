@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -29,11 +28,11 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:id="@+id/main"
-    tools:context=".activity.LoginActivity"
-
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".activity.LoginActivity">
     <!-- TGH   android:background="#FFF8E1"> &lt;!&ndash; رنگ کرم بسیار ملایم برای پس‌زمینه کل صفحه &ndash;&gt;-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:hint="نام کاربری"
+                    android:textColorHint="@color/black"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
@@ -110,7 +110,8 @@
                         android:id="@+id/edtUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColor="@android:color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- فیلد رمز عبور -->
@@ -130,13 +131,16 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxStrokeColor="#6D4C41"
-                    app:passwordToggleEnabled="true">
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="#000000">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textColor="@android:color/black" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- دکمه ورود -->

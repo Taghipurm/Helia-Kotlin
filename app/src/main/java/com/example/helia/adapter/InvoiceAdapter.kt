@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helia.databinding.ItemInvoiceBinding
+import com.example.helia.helpers.toPersianDigits
+import com.example.helia.helpers.toPersianFormattedNumber
 import com.example.helia.model.InvoiceItem
 
 class InvoiceAdapter(
@@ -33,16 +35,14 @@ class InvoiceAdapter(
     ) {
         val item =
             items[position]
-        holder.binding.txtName.text =
-            item.productName
-        holder.binding.txtQty.text =
-            item.quantity.toString()
+        holder.binding.txtName.text = item.productName
+        holder.binding.txtQty.text = item.quantity.toPersianDigits()
         holder.binding.txtItemReturned.text=
 //            item.returnedQuantity.toString()
-            "ب.گ. ${item.returnedQuantity}"
+            "ب.گ.[${item.returnedQuantity.toPersianDigits()}]"
         holder.binding.txtPrice.text =
 //            (item.price * item.quantity).toString()
-            (item.price * (item.quantity-item.returnedQuantity)).toString()
+            (item.price * (item.quantity-item.returnedQuantity)).toPersianFormattedNumber()
 
 /*        // افزایش تعداد
         holder.binding.btnPlus.setOnClickListener {

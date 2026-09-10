@@ -19,16 +19,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:layoutDirection="rtl"
             android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="4dp"
+                android:src="@android:drawable/radiobutton_off_background"
+                app:tint="@color/black" />
 
             <!-- نام کالا -->
             <TextView
                 android:id="@+id/txtProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="نام کالا:"
                 android:textSize="16sp"
-                android:singleLine="true"
                 android:textStyle="bold" />
 
             <TextView
@@ -45,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:layoutDirection="rtl"
             android:orientation="horizontal">
 
             <TextView

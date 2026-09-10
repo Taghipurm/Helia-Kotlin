@@ -7,6 +7,8 @@ import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helia.R
 import com.example.helia.databinding.ItemInvoiceDetailBinding
+import com.example.helia.helpers.toPersianDigits
+import com.example.helia.helpers.toPersianFormattedNumber
 import com.example.helia.model.InvoiceDetail
 
 class InvoiceDetailAdapter(
@@ -47,19 +49,17 @@ class InvoiceDetailAdapter(
             item.productName
 
         holder.binding.txtQuantity.text =
-            "تعداد: ${item.quantity}    برگشت: [${item.returnedQuantity}]"
+            "تعداد: ${item.quantity.toPersianDigits()}    برگشت: [${item.returnedQuantity.toPersianDigits()}]"
 
         holder.binding.txtPrice.text =
-            "قیمت: ${String.format("%,d", item.price)}"
+            "قیمت: ${item.price.toPersianFormattedNumber()}"
 
-        val netQuantity =
-            item.quantity - item.returnedQuantity
+        val netQuantity = item.quantity - item.returnedQuantity
 
-        val rowTotal =
-            item.price * netQuantity
+        val rowTotal = item.price * netQuantity
 
         holder.binding.txtRowTotal.text =
-            "جمع: ${String.format("%,d", rowTotal)} ریال"
+            "جمع: ${rowTotal.toPersianFormattedNumber()} ریال"
     }
 
     override fun getItemCount(): Int =
