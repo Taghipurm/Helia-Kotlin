@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:elevation="12dp"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <!-- هدر منو -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="#0099CC"
+        android:orientation="vertical">
+
+        <!-- ردیف بالایی: دکمه بستن -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:paddingTop="4dp"
+            android:paddingEnd="4dp">
+
+            <ImageButton
+                android:id="@+id/btnCloseDrawer"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="بستن منو"
+                android:src="@drawable/ic_close"
+                app:tint="#FFFFFF" />
+
+        </LinearLayout>
+
+        <!-- لوگو و عنوان -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imgDrawerLogo"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:contentDescription="لوگوی هلیا"
+                android:src="@drawable/helia2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="هلیا"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="سامانه نان فانتزی هلیا"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- فضای بین هدر و گزینه‌ها -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- فاکتور جدید -->
+    <TextView
+        android:id="@+id/menuNewInvoice"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="🧾   فاکتور جدید"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="17sp" />
+
+    <!-- مشتریان -->
+<!--
+    <TextView
+        android:id="@+id/menuCustomers"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="👥   مشتریان"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+-->
+
+    <!-- سوابق فاکتورها -->
+    <TextView
+        android:id="@+id/menuInvoiceHistory"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="📋   سوابق/تصویر فاکتورها"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="17sp" />
+
+    <!-- کالاها -->
+<!--
+    <TextView
+        android:id="@+id/menuProducts"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="📦   کالاها"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+-->
+
+    <!-- گزارش‌ها -->
+<!--
+    <TextView
+        android:id="@+id/menuReports"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="📊   گزارش‌ها"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+-->
+
+<!--
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#DDDDDD" />
+-->
+
+    <!-- تنظیمات -->
+    <TextView
+        android:id="@+id/menuSettings"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="⚙   تنظیمات"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="17sp" />
+
+    <!-- درباره -->
+    <TextView
+        android:id="@+id/menuAbout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="\u200Fℹ️   درباره برنامه"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="17sp" />
+
+
+    <!-- خروج -->
+    <TextView
+        android:id="@+id/menuLogout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="🚪   خروج"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="17sp" />
+
+</LinearLayout>

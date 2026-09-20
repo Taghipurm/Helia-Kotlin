@@ -1,14 +1,17 @@
 package com.example.helia.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.helia.R
 import com.example.helia.adapter.ProductAdapter
 import com.example.helia.databinding.ActivityProductBinding
 import com.example.helia.data.CurrentInvoice
@@ -30,9 +33,20 @@ class ProductActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding =
-            ActivityProductBinding.inflate(layoutInflater)
+        binding = ActivityProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupDrawerMenu(binding.drawerLayout)
+
+//        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+//        btnBack.setOnClickListener {
+//            startActivity(Intent(this, InvoiceActivity::class.java))
+//            finish()
+//        }
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         // 1- تنظیم RecyclerView
         binding.rvProducts.layoutManager =
             LinearLayoutManager(this@ProductActivity)

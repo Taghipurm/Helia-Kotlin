@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp">  <!--TGH-->
+
+            <ImageView
+                android:id="@+id/ivBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/h4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="12dp"
+                android:background="?attr/actionModeBackground"
+                android:contentDescription="منو"
+                android:padding="12dp"
+                android:src="@drawable/ic_menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#0099CC" />
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/helia2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivLogo">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorSurface"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <!-- نام برنامه -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="هلیا"
+                            android:textColor="#0099CC"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                        <!-- عنوان -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="16dp"
+                            android:text="سامانه فروش نان فانتزی هلیا"
+                            android:textColor="#0099CC"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <!-- خط جداکننده -->
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="#0099CC" />
+
+                        <!-- متن معرفی -->
+                        <!--
+                                            <TextView
+                                                android:id="@+id/txtDescription"
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="35dp"
+                                                android:layout_marginTop="25dp"
+                                                android:layout_marginEnd="35dp"
+                                                android:gravity="center"
+                                                android:text="اپلیکیشن فروش هلیا برای مدیریت مشتریان، کالاها و فاکتورهای فروش طراحی شده است."
+                                                android:lineSpacingExtra="6dp"
+                                                android:textColor="#333333"
+                                                android:textSize="16sp" />
+                        -->
+
+                        <!-- امکانات -->
+                        <!--    android:text="امکانات برنامه:\n\n• مدیریت مشتریان\n• ثبت و ویرایش فاکتورها\n• مشاهده سوابق فاکتورها\n• مدیریت کالاها\n• گزارش‌گیری فروش"-->
+                        <TextView
+                            android:id="@+id/txtFeatures"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="right"
+                            android:lineSpacingExtra="5dp"
+                            android:text="امکانات برنامه:\n• ثبت و ویرایش فاکتورها\n• مشاهده سوابق فاکتورها\n• تنظیمات برنامه"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="50dp"
+                            android:text="تماس با طراحان:"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtٍEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="Ali@Taghipoor.com"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp" />
+
+                        <!-- نسخه -->
+                        <TextView
+                            android:id="@+id/txtVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="نسخه: 1.0.0"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="بازگشت به صفحه ورود"
+                        android:src="?attr/homeAsUpIndicator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#0099CC" />
+
+                </FrameLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+    <!-- ========================= -->
+    <!-- منوی کشویی از سمت راست -->
+    <!-- ========================= -->
+    <include
+        android:id="@+id/drawerMenu"
+        layout="@layout/drawer_menu"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

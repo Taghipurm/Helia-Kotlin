@@ -1,65 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layoutDirection="rtl">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp">
-        <!-- الگوی گرافیکی (Pattern) - لوگو یا طرحی که بسیار کمرنگ شده است -->
-        <ImageView
-            android:id="@+id/ivBackground"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/h62"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <!-- ظرف اصلی که فیلدها داخل آن قرار می‌گیرند -->
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/helia2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ivBackground" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardContainer"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="80dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:layout_constraintStart_toStartOf="@+id/ivBackground"
-            app:layout_constraintTop_toTopOf="@id/ivBackground"
-            app:layout_constraintBottom_toBottomOf="@id/ivBackground"
-            app:strokeWidth="0dp"
-            >
+            android:layout_height="wrap_content"
+            android:padding="6dp">
+            <!-- الگوی گرافیکی (Pattern) - لوگو یا طرحی که بسیار کمرنگ شده است -->
+            <ImageView
+                android:id="@+id/ivBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/h62"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="12dp"
+                android:background="?attr/actionModeBackground"
+                android:contentDescription="منو"
+                android:padding="12dp"
+                android:src="@drawable/ic_menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#0099CC" />
+
+            <!-- ظرف اصلی که فیلدها داخل آن قرار می‌گیرند -->
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/helia2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivBackground" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="80dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/ivBackground"
+                app:layout_constraintStart_toStartOf="@+id/ivBackground"
+                app:layout_constraintTop_toTopOf="@id/ivBackground"
+                app:strokeWidth="0dp">
 
-                <com.google.android.material.card.MaterialCardView
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="بازگشت به صفحه ورود"
+                    android:src="?attr/homeAsUpIndicator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#0099CC" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -71,185 +97,133 @@
                             android:id="@+id/txtInvoiceID"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="فاکتور شماره:"
                             android:textAlignment="center"
+                            android:textColor="#0099CC"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:text="فاکتور شماره:" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtCustomer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="مشتری:"
                             android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:text="مشتری:" />
+                            android:textColor="#0099CC"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="تاریخ:"
                             android:textAlignment="center"
-                            android:textStyle="bold"
-                            android:text="تاریخ:" />
+                            android:textColor="#0099CC"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="#0099CC" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvItems"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txtTotal"
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
-                        android:text="جمع کل"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:layout_margin="4dp">
 
-                </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/txtTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="6dp"
+                            android:text="جمع کل"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-<!--                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnDelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="حذف فاکتور" />
--->
-<!--
+                    </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="rtl"
-                    android:orientation="horizontal"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
-                    &lt;!&ndash; حذف فاکتور &ndash;&gt;
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDelete"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:contentDescription="حذف فاکتور"
-                        android:backgroundTint="#D32F2F"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_delete"
-                        app:iconGravity="textStart"
-                        app:iconPadding="4dp"
-                        app:iconTint="@color/white" />
+                        <!-- دکمه ویرایش (سبز) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnEdit"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1.1"
+                            android:text="ویرایش"
+                            android:textColor="#388E3C"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_edit_modern"
+                            app:iconTint="#388E3C"
+                            app:strokeColor="#388E3C"
+                            app:strokeWidth="2dp" />
 
-                    &lt;!&ndash; تصویر فاکتور &ndash;&gt;
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnInvoiceImage"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:contentDescription="تصویر فاکتور"
-                        android:backgroundTint="#1976D2"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_invoice_image"
-                        app:iconGravity="textStart"
-                        app:iconPadding="4dp"
-                        app:iconTint="@color/white" />
+                        <!-- دکمه تصویر (آبی) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnInvoiceImage"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
+                            android:text="تصویر"
+                            android:textColor="#1976D2"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_invoice_image_modern"
+                            app:iconTint="#1976D2"
+                            app:strokeColor="#1976D2"
+                            app:strokeWidth="2dp" />
 
-                    &lt;!&ndash; ویرایش فاکتور &ndash;&gt;
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnEdit"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:contentDescription="ویرایش فاکتور"
-                        android:backgroundTint="#388E3C"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_edit"
-                        app:iconGravity="textStart"
-                        app:iconPadding="4dp"
-                        app:iconTint="@color/white" />
+                        <!-- دکمه حذف (قرمز) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDelete"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
+                            android:text="حذف"
+                            android:textColor="#D32F2F"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_delete_modern"
+                            app:iconTint="#D32F2F"
+                            app:strokeColor="#D32F2F"
+                            app:strokeWidth="2dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
--->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="rtl"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-                    <!-- دکمه ویرایش (سبز) -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnEdit"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1.1"
-                        android:layout_margin="4dp"
-                        android:text="ویرایش"
-                        android:textColor="#388E3C"
-                        app:strokeColor="#388E3C"
-                        app:strokeWidth="2dp"
-                        app:cornerRadius="12dp"
-                        app:icon="@drawable/ic_edit_modern"
-                        app:iconTint="#388E3C" />
+    <include
+        android:id="@+id/drawerMenu"
+        layout="@layout/drawer_menu"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
 
-                    <!-- دکمه تصویر (آبی) -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnInvoiceImage"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_margin="4dp"
-                        android:text="تصویر"
-                        android:textColor="#1976D2"
-                        app:strokeColor="#1976D2"
-                        app:strokeWidth="2dp"
-                        app:cornerRadius="12dp"
-                        app:icon="@drawable/ic_invoice_image_modern"
-                        app:iconTint="#1976D2" />
-
-                    <!-- دکمه حذف (قرمز) -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDelete"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_margin="4dp"
-                        android:text="حذف"
-                        android:textColor="#D32F2F"
-                        app:strokeColor="#D32F2F"
-                        app:strokeWidth="2dp"
-                        app:cornerRadius="12dp"
-                        app:icon="@drawable/ic_delete_modern"
-                        app:iconTint="#D32F2F" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>

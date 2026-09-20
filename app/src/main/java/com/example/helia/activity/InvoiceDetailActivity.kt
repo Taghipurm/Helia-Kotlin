@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,16 +26,11 @@ import com.example.helia.helpers.toPersianFormattedNumber
 
 //class InvoiceDetailActivity : AppCompatActivity() {
 class InvoiceDetailActivity : BaseActivity() {
-    private lateinit var binding:
-            ActivityInvoiceDetailBinding
-    private lateinit var adapter:
-            InvoiceDetailAdapter
-
+    private lateinit var binding: ActivityInvoiceDetailBinding
+    private lateinit var adapter: InvoiceDetailAdapter
     //    private var invoiceID: Long = 0
     private var invoiceID: String = ""
-
     private lateinit var invoiceImageView: View
-
     private lateinit var loadedInvoice: InvoiceDetailResponse
     private val editLauncher =
         registerForActivityResult(
@@ -55,18 +51,24 @@ class InvoiceDetailActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        binding =
-            ActivityInvoiceDetailBinding.inflate(
-                layoutInflater
-            )
+        binding = ActivityInvoiceDetailBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
-        invoiceID =
-            intent.getStringExtra("InvoiceID") ?: ""
+        setupDrawerMenu(binding.drawerLayout)
 
-        binding.rvItems.layoutManager =
-            LinearLayoutManager(this)
+//        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+//        btnBack.setOnClickListener {
+//            startActivity(Intent(this, InvoiceHistoryActivity::class.java))
+//            finish()
+//        }
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        invoiceID = intent.getStringExtra("InvoiceID") ?: ""
+
+        binding.rvItems.layoutManager = LinearLayoutManager(this)
 
         binding.btnDelete.setOnClickListener {
 
@@ -89,21 +91,11 @@ class InvoiceDetailActivity : BaseActivity() {
 
         binding.btnEdit.setOnClickListener {
 
-            val intent =
-                Intent(
-                    this,
-                    InvoiceActivity::class.java
-                )
+            val intent = Intent(this, InvoiceActivity::class.java)
 
-            intent.putExtra(
-                "MODE",
-                "EDIT"
-            )
+            intent.putExtra("MODE","EDIT")
 
-            intent.putExtra(
-                "InvoiceID",
-                invoiceID
-            )
+            intent.putExtra("InvoiceID",invoiceID)
 
             editLauncher.launch(intent)
         }
@@ -125,8 +117,7 @@ class InvoiceDetailActivity : BaseActivity() {
 
                 if (result.success) {
 
-                    val invoice =
-                        result.data
+                    val invoice = result.data
 
                     if (invoice != null) {
 

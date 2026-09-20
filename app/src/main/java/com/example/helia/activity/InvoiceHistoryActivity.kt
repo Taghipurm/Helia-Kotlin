@@ -3,11 +3,12 @@ package com.example.helia.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.helia.R
 import com.example.helia.adapter.InvoiceHistoryAdapter
 import com.example.helia.data.CurrentInvoice
 import com.example.helia.databinding.ActivityInvoiceHistoryBinding
@@ -18,15 +19,9 @@ import kotlinx.coroutines.launch
 //class InvoiceHistoryActivity : AppCompatActivity() {
 class InvoiceHistoryActivity : BaseActivity() {
 
-    private lateinit var binding:
-            ActivityInvoiceHistoryBinding
-
-    private val invoices =
-        mutableListOf<InvoiceHistory>()
-
-    private lateinit var adapter:
-            InvoiceHistoryAdapter
-
+    private lateinit var binding: ActivityInvoiceHistoryBinding
+    private val invoices = mutableListOf<InvoiceHistory>()
+    private lateinit var adapter: InvoiceHistoryAdapter
     private val invoiceDetailLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -40,38 +35,37 @@ class InvoiceHistoryActivity : BaseActivity() {
 
         }
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
-        binding =
-            ActivityInvoiceHistoryBinding.inflate(
-                layoutInflater
-            )
-
+        binding = ActivityInvoiceHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupDrawerMenu(binding.drawerLayout)
+
+//        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+//        btnBack.setOnClickListener {
+//            startActivity(Intent(this, CustomerActivity::class.java))
+//            finish()
+//        }
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         supportActionBar?.title = "تاریخچه فاکتورها"
 
-        adapter =
-            InvoiceHistoryAdapter(invoices) { invoice ->
+        adapter = InvoiceHistoryAdapter(invoices) { invoice ->
 
-                val intent =
-                    Intent(
-                        this@InvoiceHistoryActivity,
-                        InvoiceDetailActivity::class.java
-                    )
+            val intent = Intent(this@InvoiceHistoryActivity, InvoiceDetailActivity::class.java)
 
-                intent.putExtra(
-                    "InvoiceID",
-                    invoice.invoiceID
-                )
+            intent.putExtra("InvoiceID", invoice.invoiceID)
 
-                invoiceDetailLauncher.launch(intent)
+            invoiceDetailLauncher.launch(intent)
 
-            }
+//            finish()
+
+        }
 
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this)

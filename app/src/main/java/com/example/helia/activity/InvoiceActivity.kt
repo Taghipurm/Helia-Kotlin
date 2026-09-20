@@ -1,42 +1,41 @@
 package com.example.helia.activity
 
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Intent
-import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.helia.adapter.InvoiceAdapter
-import com.example.helia.data.PreferencesManager
-import com.example.helia.data.CurrentInvoice
-import com.example.helia.databinding.ActivityInvoiceBinding
-import com.example.helia.model.Customer
-import com.example.helia.model.InvoiceDetailRequest
-import com.example.helia.model.InvoiceRequest
-import com.example.helia.model.InvoiceItem
-import com.example.helia.network.RetrofitClient
-import kotlinx.coroutines.launch
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
-import com.example.helia.R
-import android.widget.LinearLayout
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import android.util.Log
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.content.ContentValues
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
+import android.util.Log
+import android.view.View
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.helia.R
+import com.example.helia.adapter.InvoiceAdapter
+import com.example.helia.data.CurrentInvoice
+import com.example.helia.data.PreferencesManager
+import com.example.helia.databinding.ActivityInvoiceBinding
 import com.example.helia.helpers.toPersianDigits
 import com.example.helia.helpers.toPersianFormattedNumber
+import com.example.helia.model.Customer
+import com.example.helia.model.InvoiceDetailRequest
+import com.example.helia.model.InvoiceItem
+import com.example.helia.model.InvoiceRequest
+import com.example.helia.network.RetrofitClient
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 //class InvoiceActivity : AppCompatActivity() {
 class InvoiceActivity : BaseActivity() {
@@ -46,8 +45,9 @@ class InvoiceActivity : BaseActivity() {
     private lateinit var invoiceImageView: View
     private var editMode = false
 
-//    private var editInvoiceID: Long = 0
+    //    private var editInvoiceID: Long = 0
     private var editInvoiceID: String = "0"
+
     //    private var invoiceNumber: Long = 0
     private var invoiceNumber: String = "0"
     private var invoiceDate: String = ""
@@ -56,10 +56,20 @@ class InvoiceActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding =
-            ActivityInvoiceBinding.inflate(layoutInflater)
-
+        binding = ActivityInvoiceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupDrawerMenu(binding.drawerLayout)
+
+//        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+//        btnBack.setOnClickListener {
+//            startActivity(Intent(this, CustomerActivity::class.java))
+//            finish()
+//        }
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
         editMode =
             intent.getStringExtra("MODE") == "EDIT"
@@ -116,13 +126,9 @@ class InvoiceActivity : BaseActivity() {
         binding.rvItems.adapter =
             adapter
         updateSaveButton()
+
         binding.btnAddProduct.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@InvoiceActivity,
-                    ProductActivity::class.java
-                )
-            )
+            startActivity(Intent(this@InvoiceActivity,ProductActivity::class.java))
         }
 
         updateTotal()
@@ -138,7 +144,7 @@ class InvoiceActivity : BaseActivity() {
 
                     } catch (e: Exception) {
 
-                        Log.e("InvoiceUpdate","updateInvoice error",e)
+                        Log.e("InvoiceUpdate", "updateInvoice error", e)
                     }
 
                 } else {
@@ -178,7 +184,7 @@ class InvoiceActivity : BaseActivity() {
 
                 customerID =
 //                    CurrentInvoice.customer?.customerID ?: 0,
-                CurrentInvoice.customer?.customerID ?: "0",
+                    CurrentInvoice.customer?.customerID ?: "0",
 
                 userID =
                     PreferencesManager.getUserID(this),
@@ -266,11 +272,7 @@ class InvoiceActivity : BaseActivity() {
 
                 CurrentInvoice.clear()
 
-                val intent =
-                    Intent(
-                        this,
-                        CustomerActivity::class.java
-                    )
+                val intent = Intent(this, CustomerActivity::class.java)
 
                 intent.flags =
                     Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -278,7 +280,7 @@ class InvoiceActivity : BaseActivity() {
 
                 startActivity(intent)
 
-                finish()
+//                finish()
 
             } else {
 
